@@ -152,39 +152,34 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Java基础-线程相关知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/17/hello-world/">Hello World</a>
+      <a class="article-title" href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">Java基础——线程相关知识</a>
     </h1>
   
 
         
-        <a href="/2020/11/17/hello-world/" class="archive-article-date">
-  	<time datetime="2020-11-17T03:44:40.156Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-17</time>
+        <a href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="archive-article-date">
+  	<time datetime="2020-11-21T10:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h1 id="Java基础——线程相关知识（1）"><a href="#Java基础——线程相关知识（1）" class="headerlink" title="Java基础——线程相关知识（1）"></a>Java基础——线程相关知识（1）</h1><h2 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h2><h3 id="进程-是程序的执行过程，或是正在运行的程序。"><a href="#进程-是程序的执行过程，或是正在运行的程序。" class="headerlink" title="进程:是程序的执行过程，或是正在运行的程序。"></a>进程:是程序的执行过程，或是正在运行的程序。</h3><p><img src="https://github.com/qx519337872/images/blob/master/%E8%BF%9B%E7%A8%8B.png"></p>
+<h2 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h2><h3 id="线程-进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）"><a href="#线程-进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）" class="headerlink" title="线程:进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）"></a>线程:进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）</h3><h2 id="线程的创建和使用"><a href="#线程的创建和使用" class="headerlink" title="线程的创建和使用"></a>线程的创建和使用</h2><h3 id="第一种方法-继承Thread"><a href="#第一种方法-继承Thread" class="headerlink" title="第一种方法:继承Thread"></a>第一种方法:继承Thread</h3><h4 id="1-创建一个继承于Thread的子类"><a href="#1-创建一个继承于Thread的子类" class="headerlink" title="1.创建一个继承于Thread的子类"></a>1.创建一个继承于Thread的子类</h4><h4 id="2-重写Thread类的run-方法"><a href="#2-重写Thread类的run-方法" class="headerlink" title="2.重写Thread类的run()方法"></a>2.重写Thread类的run()方法</h4><p><img src="https://github.com/qx519337872/images/blob/master/%E5%88%9B%E5%BB%BA.png"></p>
+<h4 id="3-通过main方法-创建Thread类的子类的对象"><a href="#3-通过main方法-创建Thread类的子类的对象" class="headerlink" title="3.(通过main方法)创建Thread类的子类的对象"></a>3.(通过main方法)创建Thread类的子类的对象</h4><h4 id="4-通过此对象调用start-方法"><a href="#4-通过此对象调用start-方法" class="headerlink" title="4.通过此对象调用start()方法"></a>4.通过此对象调用start()方法</h4><p><img src="https://github.com/qx519337872/images/blob/master/%E5%AE%9E%E4%BE%8B.png"></p>
+<h3 id="第二种方法-实现Runnable接口"><a href="#第二种方法-实现Runnable接口" class="headerlink" title="第二种方法:实现Runnable接口"></a>第二种方法:实现Runnable接口</h3><h4 id="1-创建一个实现Runnable接口的类"><a href="#1-创建一个实现Runnable接口的类" class="headerlink" title="1.创建一个实现Runnable接口的类"></a>1.创建一个实现Runnable接口的类</h4><h4 id="2-实现Runnable接口的抽象方法-run-方法"><a href="#2-实现Runnable接口的抽象方法-run-方法" class="headerlink" title="2.实现Runnable接口的抽象方法:run()方法"></a>2.实现Runnable接口的抽象方法:run()方法</h4><p><img src="https://github.com/qx519337872/images/blob/master/%E5%88%9B%E5%BB%BA1.png"></p>
+<h4 id="3-通过main方法-创建实现类的对象"><a href="#3-通过main方法-创建实现类的对象" class="headerlink" title="3.(通过main方法)创建实现类的对象"></a>3.(通过main方法)创建实现类的对象</h4><h4 id="4-将此对象作为参数传递到Thread类的构造器中"><a href="#4-将此对象作为参数传递到Thread类的构造器中" class="headerlink" title="4.将此对象作为参数传递到Thread类的构造器中"></a>4.将此对象作为参数传递到Thread类的构造器中</h4><h4 id="5-通过Thread类的对象调用start-方法"><a href="#5-通过Thread类的对象调用start-方法" class="headerlink" title="5.通过Thread类的对象调用start()方法"></a>5.通过Thread类的对象调用start()方法</h4><p><img src="https://github.com/qx519337872/images/blob/master/%E5%AE%9E%E4%BE%8B1.png"></p>
+<h3 id="比较创建线程的两种方法"><a href="#比较创建线程的两种方法" class="headerlink" title="比较创建线程的两种方法"></a>比较创建线程的两种方法</h3><h4 id="开发中：优先选择实现Runnable接口的方式"><a href="#开发中：优先选择实现Runnable接口的方式" class="headerlink" title="开发中：优先选择实现Runnable接口的方式"></a>开发中：优先选择实现Runnable接口的方式</h4><h5 id="原因-1-实现的方式没有类的单继承性的局限性"><a href="#原因-1-实现的方式没有类的单继承性的局限性" class="headerlink" title="原因:1.实现的方式没有类的单继承性的局限性"></a>原因:1.实现的方式没有类的单继承性的局限性</h5><h5 id="原因-2-实现的方式更适合来处理多个线程有共享数据的情况"><a href="#原因-2-实现的方式更适合来处理多个线程有共享数据的情况" class="headerlink" title="原因:2.实现的方式更适合来处理多个线程有共享数据的情况"></a>原因:2.实现的方式更适合来处理多个线程有<strong>共享数据</strong>的情况</h5><h5 id="联系-public-class-Thread-implements-Runnable"><a href="#联系-public-class-Thread-implements-Runnable" class="headerlink" title="联系:public class Thread implements Runnable"></a>联系:public class Thread implements Runnable</h5><h5 id="相同点-两种方式都需要重写run-方法，将线程要执行的逻辑声明在run-中"><a href="#相同点-两种方式都需要重写run-方法，将线程要执行的逻辑声明在run-中" class="headerlink" title="相同点:两种方式都需要重写run()方法，将线程要执行的逻辑声明在run()中"></a>相同点:两种方式都需要重写run()方法，将线程要执行的逻辑声明在run()中</h5><h2 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h2><p><img src="https://github.com/qx519337872/images/blob/master/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png"></p>
+<h2 id="解决线程的安全问题"><a href="#解决线程的安全问题" class="headerlink" title="解决线程的安全问题"></a>解决线程的安全问题</h2><h3 id="线程安全问题：当有多个线程同步进行的时候，可能会对共享数据造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成共享数据计算错误）"><a href="#线程安全问题：当有多个线程同步进行的时候，可能会对共享数据造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成共享数据计算错误）" class="headerlink" title="线程安全问题：当有多个线程同步进行的时候，可能会对共享数据造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成共享数据计算错误）"></a>线程安全问题：当有多个线程同步进行的时候，可能会对<strong>共享数据</strong>造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成<strong>共享数据</strong>计算错误）</h3><h3 id="解决方式一：同步代码块"><a href="#解决方式一：同步代码块" class="headerlink" title="解决方式一：同步代码块"></a>解决方式一：同步代码块</h3><h4 id="利用synchronized-同步监视器-需要被同步的代码"><a href="#利用synchronized-同步监视器-需要被同步的代码" class="headerlink" title="利用synchronized(同步监视器){需要被同步的代码}"></a>利用synchronized(同步监视器){需要被同步的代码}</h4><h4 id="换句话说，就是利用synchronized-同步监视器-给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响"><a href="#换句话说，就是利用synchronized-同步监视器-给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响" class="headerlink" title="换句话说，就是利用synchronized(同步监视器)给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响"></a>换句话说，就是利用synchronized(同步监视器)给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响</h4><p><img src="https://github.com/qx519337872/images/blob/master/%E5%90%8C%E6%AD%A5%E7%9B%91%E8%A7%86%E5%99%A8.png"><br><img src="https://github.com/qx519337872/images/blob/master/%E5%90%8C%E6%AD%A5%E7%9B%91%E8%A7%86%E5%99%A81.png"></p>
+<h4 id="注意-同步监视器-锁-：所有线程都必须使用同一把锁！"><a href="#注意-同步监视器-锁-：所有线程都必须使用同一把锁！" class="headerlink" title="注意:同步监视器(锁)：所有线程都必须使用同一把锁！"></a>注意:同步监视器(锁)：所有线程都必须使用同一把锁！</h4><h3 id="解决方式二：同步方法"><a href="#解决方式二：同步方法" class="headerlink" title="解决方式二：同步方法"></a>解决方式二：同步方法</h3><p><img src="https://github.com/qx519337872/images/blob/master/%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95.png"></p>
 
       
 
@@ -197,7 +192,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/17/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">展开全文 >></a>
         </p>
       
 
