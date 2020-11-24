@@ -6,29 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Java基础——线程相关知识 | Hexo</title>
+  <title>Java基础-线程相关知识（2） | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java基础——线程相关知识（1）什么是进程进程:是程序的执行过程，或是正在运行的程序。 什么是线程线程:进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）线程的创建和使用第一种方法:继承Thread1.创建一个继承于Thread的子类2.重写Thread类的run()方法 3.(通过main方法)创建Thread类的子类的对象4.通过此对象调用start()方法">
+  <meta name="description" content="Java基础——线程相关知识（2）什么是死锁不同的线程分别占用对方需要的同步资源不放弃(可以理解为各自手握一把对方需要用到的锁)，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁ps:出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续 具体示例 出现的原因当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java基础——线程相关知识">
-<meta property="og:url" content="http://example.com/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:title" content="Java基础-线程相关知识（2）">
+<meta property="og:url" content="http://example.com/2020/11/24/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%882%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Java基础——线程相关知识（1）什么是进程进程:是程序的执行过程，或是正在运行的程序。 什么是线程线程:进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）线程的创建和使用第一种方法:继承Thread1.创建一个继承于Thread的子类2.重写Thread类的run()方法 3.(通过main方法)创建Thread类的子类的对象4.通过此对象调用start()方法">
+<meta property="og:description" content="Java基础——线程相关知识（2）什么是死锁不同的线程分别占用对方需要的同步资源不放弃(可以理解为各自手握一把对方需要用到的锁)，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁ps:出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续 具体示例 出现的原因当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqSXLuVEutYgs4aMBDSG3YHd4.O*jQw4B8T0xNGBFYXfkmKkMs1h*TUMUlTwqeuOz0UvllxK79ZYZo2*l*mtqazo!/b&bo=qAJEAqgCRAIDCSw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqQ6A7N2rLZUhjLwAlQeAwztzHffKNpybb.j9R89ukep7wbRtJ2E0bB*cDBA0sJC.9SPwO9n1pWhSfaVWFqF8SkA!/b&bo=twNvAbcDbwEDCSw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEMgoZ7iYFa8lTA7icN2Y*yZ13*bl4oWm4c7qJgWbqEMetIJWU5XVpo5mOYcg5u5PBuX0RCEzHklewrPXGrmSy8M!/b&bo=egIzAXoCMwEDGTw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEDcu0rr5d9s.ZFz8sStVVqx9aF7nJX*EpYtGk3QB3PwsVD.4fUFyrUlksDzUpbPUVWMq9IdGrZ7sycF2JgobS7w!/b&bo=mQNXAZkDVwEDGTw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEIld8SeJk9fjDq*xoup*YgE*OJuuvJ7uJ*hIBC.*K5CZR61trvnyTvuvRlz7BoxnpkOc7EU2nG9NftH75kIDLww!/b&bo=kAH3AJAB9wADGTw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrECxZu3kEmb1zo5U1OUtnMQrOFrizjpJIqv3mgPqkjhRIz2ohaa3ThdE*.VjGW4LwRUjzbdwYrlc2ELYkFvYn*OU!/b&bo=MgNfATIDXwEDGTw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEA7RCAg*rjVdAYg7xaCLBRBOHPfz5CCBgRnYi8u8UnnhM7L8L8371cnWxAFeCGLppDrL*Dfyzkn9PTqiwy0PhyM!/b&bo=uwJqAbsCagEDGTw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrENd*vj*oqbxU*iiNe5Yb4obm97vsqa5FP4x8f*YSBly4xNTLLkTTv14ZQ5nC8XJSEohyC1y*u3CHzjTvRW8Kpmw!/b&bo=YwJwAWMCcAEDGTw!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEJcxgXqImRBHg1F2jOqEFyyuFek7xuSBJMHnwxffIVmVUSB6u.pb3C6bIU1kRrksCq2JSuUvSzxGRX.ivPgZyD0!/b&bo=vwOSAb8DkgEDGTw!&rf=viewer_4">
-<meta property="article:published_time" content="2020-11-21T10:02:40.000Z">
-<meta property="article:modified_time" content="2020-11-22T03:00:17.630Z">
+<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqThgthL5mBW1ufpjJozTP09EKB6R0SUQk37t8*G1AS*X1j9M7ISaQVlGiEzaoGdMKRpy.G*E33St5m866SzCz8o!/b&bo=CgKLAAAAAAADB6E!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEFvgsqEpG9IddupK9*CcYBbBMsHcvnPWlM0ILKhXmjWvHcs4tyY.BnbM0Ifx2llSMD6a2qX5Nalrdw5.iWOc.Iw!/b&bo=ygFLAgAAAAADF7A!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEPAlV3c8kC2Oblkkozv3ddF2SzXP0hltDaPAujDKg.PPu9zjnZQ95BIE64jRXSdpXDhS3UFck6dIzDvdC2ouOH0!/b&bo=wwHDAQAAAAADFzI!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEEYjhc9ltDBLMeMqamYueBAl6GW.4HX.ZpTTbZ7CSHtRaPFVcMkw6P8iIqZEwYUmYaPbwQDiCyduHMio6udgJ6Q!/b&bo=twJIAQAAAAADF84!&rf=viewer_4">
+<meta property="article:published_time" content="2020-11-24T03:45:22.000Z">
+<meta property="article:modified_time" content="2020-11-24T04:31:29.139Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqSXLuVEutYgs4aMBDSG3YHd4.O*jQw4B8T0xNGBFYXfkmKkMs1h*TUMUlTwqeuOz0UvllxK79ZYZo2*l*mtqazo!/b&bo=qAJEAqgCRAIDCSw!&rf=viewer_4">
+<meta name="twitter:image" content="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqThgthL5mBW1ufpjJozTP09EKB6R0SUQk37t8*G1AS*X1j9M7ISaQVlGiEzaoGdMKRpy.G*E33St5m866SzCz8o!/b&bo=CgKLAAAAAAADB6E!&rf=viewer_4">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -164,35 +159,29 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Java基础-线程相关知识" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Java基础-线程相关知识（2）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Java基础——线程相关知识
+      Java基础-线程相关知识（2）
     </h1>
   
 
         
-        <a href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="archive-article-date">
-  	<time datetime="2020-11-21T10:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-21</time>
+        <a href="/2020/11/24/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%882%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2020-11-24T03:45:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Java基础——线程相关知识（1）"><a href="#Java基础——线程相关知识（1）" class="headerlink" title="Java基础——线程相关知识（1）"></a>Java基础——线程相关知识（1）</h1><h2 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h2><h3 id="进程-是程序的执行过程，或是正在运行的程序。"><a href="#进程-是程序的执行过程，或是正在运行的程序。" class="headerlink" title="进程:是程序的执行过程，或是正在运行的程序。"></a>进程:是程序的执行过程，或是正在运行的程序。</h3><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqSXLuVEutYgs4aMBDSG3YHd4.O*jQw4B8T0xNGBFYXfkmKkMs1h*TUMUlTwqeuOz0UvllxK79ZYZo2*l*mtqazo!/b&bo=qAJEAqgCRAIDCSw!&rf=viewer_4" alt="进程图"></p>
-<h2 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h2><h3 id="线程-进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）"><a href="#线程-进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）" class="headerlink" title="线程:进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）"></a>线程:进程可以进一步细化为线程，是一个程序内部的执行路径（可以理解为各个分头执行的任务）</h3><h2 id="线程的创建和使用"><a href="#线程的创建和使用" class="headerlink" title="线程的创建和使用"></a>线程的创建和使用</h2><h3 id="第一种方法-继承Thread"><a href="#第一种方法-继承Thread" class="headerlink" title="第一种方法:继承Thread"></a>第一种方法:继承Thread</h3><h4 id="1-创建一个继承于Thread的子类"><a href="#1-创建一个继承于Thread的子类" class="headerlink" title="1.创建一个继承于Thread的子类"></a>1.创建一个继承于Thread的子类</h4><h4 id="2-重写Thread类的run-方法"><a href="#2-重写Thread类的run-方法" class="headerlink" title="2.重写Thread类的run()方法"></a>2.重写Thread类的run()方法</h4><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqQ6A7N2rLZUhjLwAlQeAwztzHffKNpybb.j9R89ukep7wbRtJ2E0bB*cDBA0sJC.9SPwO9n1pWhSfaVWFqF8SkA!/b&bo=twNvAbcDbwEDCSw!&rf=viewer_4" alt="创建"></p>
-<h4 id="3-通过main方法-创建Thread类的子类的对象"><a href="#3-通过main方法-创建Thread类的子类的对象" class="headerlink" title="3.(通过main方法)创建Thread类的子类的对象"></a>3.(通过main方法)创建Thread类的子类的对象</h4><h4 id="4-通过此对象调用start-方法"><a href="#4-通过此对象调用start-方法" class="headerlink" title="4.通过此对象调用start()方法"></a>4.通过此对象调用start()方法</h4><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEMgoZ7iYFa8lTA7icN2Y*yZ13*bl4oWm4c7qJgWbqEMetIJWU5XVpo5mOYcg5u5PBuX0RCEzHklewrPXGrmSy8M!/b&bo=egIzAXoCMwEDGTw!&rf=viewer_4" alt="实例"></p>
-<h3 id="第二种方法-实现Runnable接口"><a href="#第二种方法-实现Runnable接口" class="headerlink" title="第二种方法:实现Runnable接口"></a>第二种方法:实现Runnable接口</h3><h4 id="1-创建一个实现Runnable接口的类"><a href="#1-创建一个实现Runnable接口的类" class="headerlink" title="1.创建一个实现Runnable接口的类"></a>1.创建一个实现Runnable接口的类</h4><h4 id="2-实现Runnable接口的抽象方法-run-方法"><a href="#2-实现Runnable接口的抽象方法-run-方法" class="headerlink" title="2.实现Runnable接口的抽象方法:run()方法"></a>2.实现Runnable接口的抽象方法:run()方法</h4><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEDcu0rr5d9s.ZFz8sStVVqx9aF7nJX*EpYtGk3QB3PwsVD.4fUFyrUlksDzUpbPUVWMq9IdGrZ7sycF2JgobS7w!/b&bo=mQNXAZkDVwEDGTw!&rf=viewer_4" alt="创建1"></p>
-<h4 id="3-通过main方法-创建实现类的对象"><a href="#3-通过main方法-创建实现类的对象" class="headerlink" title="3.(通过main方法)创建实现类的对象"></a>3.(通过main方法)创建实现类的对象</h4><h4 id="4-将此对象作为参数传递到Thread类的构造器中"><a href="#4-将此对象作为参数传递到Thread类的构造器中" class="headerlink" title="4.将此对象作为参数传递到Thread类的构造器中"></a>4.将此对象作为参数传递到Thread类的构造器中</h4><h4 id="5-通过Thread类的对象调用start-方法"><a href="#5-通过Thread类的对象调用start-方法" class="headerlink" title="5.通过Thread类的对象调用start()方法"></a>5.通过Thread类的对象调用start()方法</h4><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEIld8SeJk9fjDq*xoup*YgE*OJuuvJ7uJ*hIBC.*K5CZR61trvnyTvuvRlz7BoxnpkOc7EU2nG9NftH75kIDLww!/b&bo=kAH3AJAB9wADGTw!&rf=viewer_4" alt="实例1"></p>
-<h3 id="比较创建线程的两种方法"><a href="#比较创建线程的两种方法" class="headerlink" title="比较创建线程的两种方法"></a>比较创建线程的两种方法</h3><h4 id="开发中：优先选择实现Runnable接口的方式"><a href="#开发中：优先选择实现Runnable接口的方式" class="headerlink" title="开发中：优先选择实现Runnable接口的方式"></a>开发中：优先选择实现Runnable接口的方式</h4><h5 id="原因-1-实现的方式没有类的单继承性的局限性"><a href="#原因-1-实现的方式没有类的单继承性的局限性" class="headerlink" title="原因:1.实现的方式没有类的单继承性的局限性"></a>原因:1.实现的方式没有类的单继承性的局限性</h5><h5 id="原因-2-实现的方式更适合来处理多个线程有共享数据的情况"><a href="#原因-2-实现的方式更适合来处理多个线程有共享数据的情况" class="headerlink" title="原因:2.实现的方式更适合来处理多个线程有共享数据的情况"></a>原因:2.实现的方式更适合来处理多个线程有<strong>共享数据</strong>的情况</h5><h5 id="联系-public-class-Thread-implements-Runnable"><a href="#联系-public-class-Thread-implements-Runnable" class="headerlink" title="联系:public class Thread implements Runnable"></a>联系:public class Thread implements Runnable</h5><h5 id="相同点-两种方式都需要重写run-方法，将线程要执行的逻辑声明在run-中"><a href="#相同点-两种方式都需要重写run-方法，将线程要执行的逻辑声明在run-中" class="headerlink" title="相同点:两种方式都需要重写run()方法，将线程要执行的逻辑声明在run()中"></a>相同点:两种方式都需要重写run()方法，将线程要执行的逻辑声明在run()中</h5><h2 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h2><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrECxZu3kEmb1zo5U1OUtnMQrOFrizjpJIqv3mgPqkjhRIz2ohaa3ThdE*.VjGW4LwRUjzbdwYrlc2ELYkFvYn*OU!/b&bo=MgNfATIDXwEDGTw!&rf=viewer_4" alt="生命周期"></p>
-<h2 id="解决线程的安全问题"><a href="#解决线程的安全问题" class="headerlink" title="解决线程的安全问题"></a>解决线程的安全问题</h2><h3 id="线程安全问题：当有多个线程同步进行的时候，可能会对共享数据造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成共享数据计算错误）"><a href="#线程安全问题：当有多个线程同步进行的时候，可能会对共享数据造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成共享数据计算错误）" class="headerlink" title="线程安全问题：当有多个线程同步进行的时候，可能会对共享数据造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成共享数据计算错误）"></a>线程安全问题：当有多个线程同步进行的时候，可能会对<strong>共享数据</strong>造成影响（比如每个线程都要去买一个食物，当一个线程正处于购买的过程中，还没有购买成功，这时，另外一个线程刚好进入，这样的话，这两个线程可能都会购买成功，造成<strong>共享数据</strong>计算错误）</h3><h3 id="解决方式一：同步代码块"><a href="#解决方式一：同步代码块" class="headerlink" title="解决方式一：同步代码块"></a>解决方式一：同步代码块</h3><h4 id="利用synchronized-同步监视器-需要被同步的代码"><a href="#利用synchronized-同步监视器-需要被同步的代码" class="headerlink" title="利用synchronized(同步监视器){需要被同步的代码}"></a>利用synchronized(同步监视器){需要被同步的代码}</h4><h4 id="换句话说，就是利用synchronized-同步监视器-给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响"><a href="#换句话说，就是利用synchronized-同步监视器-给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响" class="headerlink" title="换句话说，就是利用synchronized(同步监视器)给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响"></a>换句话说，就是利用synchronized(同步监视器)给需要被同步的代码加上一个”锁”保证这个线程在未执行结束前处于安全状态，不被其他需要使用共享数据的线程影响</h4><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEA7RCAg*rjVdAYg7xaCLBRBOHPfz5CCBgRnYi8u8UnnhM7L8L8371cnWxAFeCGLppDrL*Dfyzkn9PTqiwy0PhyM!/b&bo=uwJqAbsCagEDGTw!&rf=viewer_4" alt="同步监视器"><br><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrENd*vj*oqbxU*iiNe5Yb4obm97vsqa5FP4x8f*YSBly4xNTLLkTTv14ZQ5nC8XJSEohyC1y*u3CHzjTvRW8Kpmw!/b&bo=YwJwAWMCcAEDGTw!&rf=viewer_4" alt="同步监视器1"></p>
-<h4 id="注意-同步监视器-锁-：所有线程都必须使用同一把锁！"><a href="#注意-同步监视器-锁-：所有线程都必须使用同一把锁！" class="headerlink" title="注意:同步监视器(锁)：所有线程都必须使用同一把锁！"></a>注意:同步监视器(锁)：所有线程都必须使用同一把锁！</h4><h3 id="解决方式二：同步方法"><a href="#解决方式二：同步方法" class="headerlink" title="解决方式二：同步方法"></a>解决方式二：同步方法</h3><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEJcxgXqImRBHg1F2jOqEFyyuFek7xuSBJMHnwxffIVmVUSB6u.pb3C6bIU1kRrksCq2JSuUvSzxGRX.ivPgZyD0!/b&bo=vwOSAb8DkgEDGTw!&rf=viewer_4" alt="同步方法"></p>
-
+        <h1 id="Java基础——线程相关知识（2）"><a href="#Java基础——线程相关知识（2）" class="headerlink" title="Java基础——线程相关知识（2）"></a>Java基础——线程相关知识（2）</h1><h2 id="什么是死锁"><a href="#什么是死锁" class="headerlink" title="什么是死锁"></a>什么是死锁</h2><h3 id="不同的线程分别占用对方需要的同步资源不放弃-可以理解为各自手握一把对方需要用到的锁-，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁"><a href="#不同的线程分别占用对方需要的同步资源不放弃-可以理解为各自手握一把对方需要用到的锁-，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁" class="headerlink" title="不同的线程分别占用对方需要的同步资源不放弃(可以理解为各自手握一把对方需要用到的锁)，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁"></a>不同的线程分别占用对方需要的同步资源不放弃(可以理解为各自手握一把对方需要用到的锁)，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁</h3><h4 id="ps-出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续"><a href="#ps-出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续" class="headerlink" title="ps:出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续"></a>ps:出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续</h4><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqThgthL5mBW1ufpjJozTP09EKB6R0SUQk37t8*G1AS*X1j9M7ISaQVlGiEzaoGdMKRpy.G*E33St5m866SzCz8o!/b&bo=CgKLAAAAAAADB6E!&rf=viewer_4" alt="情况"></p>
+<h2 id="具体示例"><a href="#具体示例" class="headerlink" title="具体示例"></a>具体示例</h2><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEFvgsqEpG9IddupK9*CcYBbBMsHcvnPWlM0ILKhXmjWvHcs4tyY.BnbM0Ifx2llSMD6a2qX5Nalrdw5.iWOc.Iw!/b&bo=ygFLAgAAAAADF7A!&rf=viewer_4" alt="示例"><br><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEPAlV3c8kC2Oblkkozv3ddF2SzXP0hltDaPAujDKg.PPu9zjnZQ95BIE64jRXSdpXDhS3UFck6dIzDvdC2ouOH0!/b&bo=wwHDAQAAAAADFzI!&rf=viewer_4" alt="示例1"><br><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEEYjhc9ltDBLMeMqamYueBAl6GW.4HX.ZpTTbZ7CSHtRaPFVcMkw6P8iIqZEwYUmYaPbwQDiCyduHMio6udgJ6Q!/b&bo=twJIAQAAAAADF84!&rf=viewer_4" alt="示例2"></p>
+<h2 id="出现的原因"><a href="#出现的原因" class="headerlink" title="出现的原因"></a>出现的原因</h2><h3 id="当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成"><a href="#当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成" class="headerlink" title="当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成"></a>当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成</h3><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="专门的算法，原则"><a href="#专门的算法，原则" class="headerlink" title="专门的算法，原则"></a>专门的算法，原则</h3><h3 id="尽量减少同步资源-锁-的定义"><a href="#尽量减少同步资源-锁-的定义" class="headerlink" title="尽量减少同步资源(锁)的定义"></a>尽量减少同步资源(锁)的定义</h3><h3 id="尽量避免嵌套同步"><a href="#尽量避免嵌套同步" class="headerlink" title="尽量避免嵌套同步"></a>尽量避免嵌套同步</h3>
       
 
       
@@ -271,7 +260,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/24/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%882%EF%BC%89/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -285,15 +274,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/22/MyCat%E5%AE%9E%E7%8E%B0%E6%B5%81%E5%BC%8F%E6%9F%A5%E8%AF%A2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MyCat实现流式查询
-        
-      </div>
-    </a>
   
+    <a href="/2020/11/22/%E6%AC%A2%E8%BF%8E/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">欢迎</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

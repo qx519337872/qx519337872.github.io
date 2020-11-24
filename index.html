@@ -152,6 +152,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java基础-线程相关知识（2）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/24/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%882%EF%BC%89/">Java基础-线程相关知识（2）</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/24/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%882%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2020-11-24T03:45:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Java基础——线程相关知识（2）"><a href="#Java基础——线程相关知识（2）" class="headerlink" title="Java基础——线程相关知识（2）"></a>Java基础——线程相关知识（2）</h1><h2 id="什么是死锁"><a href="#什么是死锁" class="headerlink" title="什么是死锁"></a>什么是死锁</h2><h3 id="不同的线程分别占用对方需要的同步资源不放弃-可以理解为各自手握一把对方需要用到的锁-，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁"><a href="#不同的线程分别占用对方需要的同步资源不放弃-可以理解为各自手握一把对方需要用到的锁-，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁" class="headerlink" title="不同的线程分别占用对方需要的同步资源不放弃(可以理解为各自手握一把对方需要用到的锁)，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁"></a>不同的线程分别占用对方需要的同步资源不放弃(可以理解为各自手握一把对方需要用到的锁)，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁</h3><h4 id="ps-出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续"><a href="#ps-出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续" class="headerlink" title="ps:出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续"></a>ps:出现死锁后，不会出现异常，也不会报错，只是所有的线程都处于阻塞状态，无法继续</h4><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/bqQfVz5yrrGYSXMvKr.cqThgthL5mBW1ufpjJozTP09EKB6R0SUQk37t8*G1AS*X1j9M7ISaQVlGiEzaoGdMKRpy.G*E33St5m866SzCz8o!/b&bo=CgKLAAAAAAADB6E!&rf=viewer_4" alt="情况"></p>
+<h2 id="具体示例"><a href="#具体示例" class="headerlink" title="具体示例"></a>具体示例</h2><p><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEFvgsqEpG9IddupK9*CcYBbBMsHcvnPWlM0ILKhXmjWvHcs4tyY.BnbM0Ifx2llSMD6a2qX5Nalrdw5.iWOc.Iw!/b&bo=ygFLAgAAAAADF7A!&rf=viewer_4" alt="示例"><br><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEPAlV3c8kC2Oblkkozv3ddF2SzXP0hltDaPAujDKg.PPu9zjnZQ95BIE64jRXSdpXDhS3UFck6dIzDvdC2ouOH0!/b&bo=wwHDAQAAAAADFzI!&rf=viewer_4" alt="示例1"><br><img src="http://m.qpic.cn/psc?/V52pmw8y0SxWmX0h6EW30vvxbw4P6iTl/TmEUgtj9EK6.7V8ajmQrEEYjhc9ltDBLMeMqamYueBAl6GW.4HX.ZpTTbZ7CSHtRaPFVcMkw6P8iIqZEwYUmYaPbwQDiCyduHMio6udgJ6Q!/b&bo=twJIAQAAAAADF84!&rf=viewer_4" alt="示例2"></p>
+<h2 id="出现的原因"><a href="#出现的原因" class="headerlink" title="出现的原因"></a>出现的原因</h2><h3 id="当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成"><a href="#当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成" class="headerlink" title="当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成"></a>当使用Thread方法创建的线程执行时，用到锁s1，此时线程休眠100，与此同时，使用Runnable方法创建的线程也在同步执行，用到锁s2，这时，两个线程若想继续执行，前者要拿到s2锁，后者要拿到s1锁，但是刚好他们两个线程，都拿着对方需要用到的锁，这样就造成了死锁的形成</h3><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="专门的算法，原则"><a href="#专门的算法，原则" class="headerlink" title="专门的算法，原则"></a>专门的算法，原则</h3><h3 id="尽量减少同步资源-锁-的定义"><a href="#尽量减少同步资源-锁-的定义" class="headerlink" title="尽量减少同步资源(锁)的定义"></a>尽量减少同步资源(锁)的定义</h3><h3 id="尽量避免嵌套同步"><a href="#尽量避免嵌套同步" class="headerlink" title="尽量避免嵌套同步"></a>尽量避免嵌套同步</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/24/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%882%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-欢迎" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -281,19 +345,19 @@
 
 
   
-    <article id="post-Java基础-线程相关知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Java基础-线程相关知识（1）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">Java基础——线程相关知识</a>
+      <a class="article-title" href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%881%EF%BC%89/">Java基础——线程相关知识（1）</a>
     </h1>
   
 
         
-        <a href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="archive-article-date">
+        <a href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%881%EF%BC%89/" class="archive-article-date">
   	<time datetime="2020-11-21T10:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-21</time>
 </a>
         
@@ -321,7 +385,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/21/Java%E5%9F%BA%E7%A1%80-%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%881%EF%BC%89/">展开全文 >></a>
         </p>
       
 
