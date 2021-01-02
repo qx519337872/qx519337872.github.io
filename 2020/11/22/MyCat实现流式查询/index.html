@@ -6,13 +6,13 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>MyCat实现流式查询 | Hexo</title>
+  <title>MyCat实现流式查询 | qx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="MyCat实现流式查询一、背景：如select x from tb大数据量查询，如百万，千万级别，现有MyCat对此查询是一边读取后端MySQL数据到其内存缓存，一边缓存被客户端读取，如果某些业务场景处理慢读取记录速度较慢，数据会在代理层中间件内存积压，对代理中间件的内存大小要求较高，也容易导致代理中间件内存溢出，即缺乏流式控制机制。二、解决思路：针对上述情况所出现的问题，我们设想可以通过实时获取">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MyCat实现流式查询">
 <meta property="og:url" content="http://example.com/2020/11/22/MyCat%E5%AE%9E%E7%8E%B0%E6%B5%81%E5%BC%8F%E6%9F%A5%E8%AF%A2/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="qx">
 <meta property="og:description" content="MyCat实现流式查询一、背景：如select x from tb大数据量查询，如百万，千万级别，现有MyCat对此查询是一边读取后端MySQL数据到其内存缓存，一边缓存被客户端读取，如果某些业务场景处理慢读取记录速度较慢，数据会在代理层中间件内存积压，对代理中间件的内存大小要求较高，也容易导致代理中间件内存溢出，即缺乏流式控制机制。二、解决思路：针对上述情况所出现的问题，我们设想可以通过实时获取">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://m.qpic.cn/psc?/V50UiQSv4CmLCa3PGiW21YlkcI3yxt51/ruAMsa53pVQWN7FLK88i5vxIOirFcHdV3o93HSnwSVSZ*var60kVBZYpUQSdxwGd.oZfnnnQ21DgjaSR6vmCtcbQjme8Z0JSgUdV.AbedKI!/b&bo=9gFaAAAAAAADB48!&rf=viewer_4">
@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://m.qpic.cn/psc?/V50UiQSv4CmLCa3PGiW21YlkcI3yxt51/ruAMsa53pVQWN7FLK88i5vxIOirFcHdV3o93HSnwSVSZ*var60kVBZYpUQSdxwGd.oZfnnnQ21DgjaSR6vmCtcbQjme8Z0JSgUdV.AbedKI!/b&bo=9gFaAAAAAAADB48!&rf=viewer_4">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="qx" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
